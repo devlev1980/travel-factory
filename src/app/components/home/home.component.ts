@@ -1,26 +1,27 @@
-import {AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ContactService} from '../../services/contact.service';
 import {IContact} from '../../models/contact';
 import {MatDialog} from '@angular/material';
 import {AddDialogComponent} from '../../dialogs/add-dialog/add-dialog.component';
 import {YesNoDialogComponent} from '../../dialogs/yes-no-dialog/yes-no-dialog.component';
 import {EditDialogComponent} from '../../dialogs/edit-dialog/edit-dialog.component';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, AfterViewChecked {
+export class HomeComponent implements OnInit, AfterViewChecked,OnDestroy {
   contacts: IContact[] = [];
-
+  sub: Subscription;
   constructor(private contactService: ContactService,
               public dialog: MatDialog,
               private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-   this.contactService.getContacts().subscribe((data) => {
+   this.sub = this.contactService.getContacts().subscribe((data) => {
       this.contacts = data;
     });
 
@@ -82,7 +83,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
 
 }
