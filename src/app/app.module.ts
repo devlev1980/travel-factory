@@ -10,6 +10,8 @@ import {EditDialogComponent} from './dialogs/edit-dialog/edit-dialog.component';
 import {YesNoDialogComponent} from './dialogs/yes-no-dialog/yes-no-dialog.component';
 import {AddDialogComponent} from './dialogs/add-dialog/add-dialog.component';
 import {MaterialModule} from './shared/material.module';
+import {RouterModule} from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {MaterialModule} from './shared/material.module';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule,
+    BrowserAnimationsModule
 
   ],
   providers: [],
